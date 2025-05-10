@@ -1,17 +1,26 @@
 import React, { useState } from 'react'
-
-const Login = () => {
-    const [emai,setEmail] = useState('');
+import axios from 'axios'
+import { toast } from 'react-toastify';
+const Login = ({setToken}) => {
+    const [email,setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
     const onSumbitHandler = async (e) => {
         try{
             // To Stop reloading te page
             e.preventDefault();
-            console.log(emai,password);
+            const response = await axios.post(backendURL+"api/user/adminlogin",{email,password});
+            if(response.data.success){
+                setToken(response.data.token);
+            }
+            else{
+                toast.error(response.data.message)
+            }
+            // console.log(response);
         }
         catch(error){
             console.error(error.message);
-            
+            toast.error(error.message);
         }
     }
   return (
@@ -23,7 +32,8 @@ const Login = () => {
                 <p>Email Address</p>
                <input type="email" name="email" id="email"
                onChange={(e) => setEmail(e.target.value)}
-               value={emai}
+               value={email}
+               required
                placeholder='your@email.com'
                className='outline-none border w-full h-10 items-center px-5 border-gray-800 text-base rounded-md'
                 />
@@ -32,12 +42,13 @@ const Login = () => {
                value={password}
                onChange={(e) => setPassword(e.target.value)}
                placeholder='password'
+               required
                className='outline-none border w-full h-10 items-center px-5 border-gray-800 text-base rounded-md'
                 />
                 <div className='flex flex-row text-center justify-center border w-full h-12 bg-black text-white text-xl py-auto rounded-lg transition-all duration-200 hover:cursor-pointer active:bg-gray-800 active:scale-95 hover:bg-gray-600 hover:shadow-sm'>
-                <button type="submit">Log In</button>
+                <button className='w-full' type="submit">Log In</button>
                 </div>
-             
+                
             </form>
         </div>
     </section>

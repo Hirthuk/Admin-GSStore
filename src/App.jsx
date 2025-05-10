@@ -1,31 +1,67 @@
-import React from 'react'
-import Navbar from './components/Navbar'
-import SideBar from './components/SideBar'
-import {Routes, Route} from 'react-router-dom'
-import AddItem from './pages/AddItem'
-import ListItem from './pages/ListItem'
-import Order from './pages/Orders'
-import { useState } from 'react'
-import Login from './pages/Login'
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import Navbar from './components/Navbar';
+import SideBar from './components/SideBar';
+import Login from './pages/Login';
+import AddItem from './pages/AddItem';
+import ListItem from './pages/ListItem';
+import Order from './pages/Orders';
+import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
-  const [token,setToken] = useState('');
-  return (
-    <div className='mx-2 md:mx-10'>
-      {token == "" ? <Login/> :
-        <>
-        <Navbar/>
-        <SideBar/>
-        <div className='w-[75%] mx-auto ml-[max(5vw,25px)] my-8 '>
-         <Routes>
-           <Route path='/add' element={<AddItem/>}/>
-           <Route path='/listitem' element={<ListItem/>}/>
-           <Route path='/orders' element={<Order/>}/>
-         </Routes>
-        </div>
-        </> }
-    
-    </div>
-  )
-}
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-export default App
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
+    }
+  }, [token]);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        className="w-full max-w-[90vw] mx-auto"
+      />
+      {!token ? (
+        <Login setToken={setToken} />
+      ) : (
+        <div className="flex flex-col h-screen">
+          <Navbar 
+            setToken={setToken}
+            onMenuToggle={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+          />
+          
+          {/* Mobile Sidebar Dropdown */}
+          {mobileSidebarOpen && (
+            <div className="md:hidden bg-white shadow-lg z-20">
+              <SideBar onItemClick={() => setMobileSidebarOpen(false)} />
+            </div>
+          )}
+
+          <div className="flex flex-1 overflow-hidden">
+            {/* Desktop Sidebar (always visible) */}
+            <div className="hidden md:block w-64 bg-white border-r border-gray-200">
+              <SideBar />
+            </div>
+            
+            {/* Main content */}
+            <main className="flex-1 overflow-auto p-4 md:p-6">
+              <Routes>
+                <Route path="/add" element={<AddItem />} />
+                <Route path="/listitems" element={<ListItem />} />
+                <Route path="/orders" element={<Order />} />
+              </Routes>
+            </main>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;

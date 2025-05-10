@@ -1,0 +1,16 @@
+## 📦 LocalStorage in React - We have use it to store the tokens and retrive to persist session
+
+LocalStorage is a browser storage mechanism for storing key-value pairs that persist across sessions. It is synchronous, per-origin, and has a typical size limit of 5-10 MB. Common methods include:
+
+* **Set Item:** `localStorage.setItem('key', 'value');`
+* **Get Item:** `localStorage.getItem('key');`
+* **Remove Item:** `localStorage.removeItem('key');`
+* **Clear All:** `localStorage.clear();`
+
+⚠️ Use it for non-sensitive data as it has no expiration and stores plain text.
+
+In React (and HTML), the <label> element is used to create a label for a form input element like a text field, checkbox, 
+radio button, or select box. 
+It provides a user-friendly way to describe what the input is for and improves accessibility for screen readers.
+
+Used in Add.jsx file to manage input file form

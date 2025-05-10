@@ -1,26 +1,53 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
-import { assets } from '../assets/assets'
-const SideBar = () => {
-  return (
-    <div className='flex flex-row'>
-    <section className='flex flex-col gap-5  mt-6 w-1/5 mr-0'>
-        <NavLink to={'add'} className='flex flex-row gap-2 items-center border border-gray-500 rounded-sm py-1 px-2 border-r-0'>
-            <img className='h-5 w-5 shadow-sm' src={assets.add_icon} alt="add_icon" />
-            <p className='hidden md:block'>Add Items</p>
-        </NavLink>
-        <NavLink to={'listitems'} className='flex flex-row gap-2 items-center border border-gray-500 rounded-sm py-1 px-2 border-r-0'>
-            <img className='h-5 w-5 shadow-sm' src={assets.order_icon} alt="add_icon" />
-            <p className='hidden md:block'>List Items</p>
-        </NavLink>
-        <NavLink to={'orders'} className='flex flex-row gap-2 items-center border border-gray-500 rounded-sm py-1 px-2 border-r-0'>
-            <img className='h-5 w-5 shadow-sm' src={assets.order_icon} alt="add_icon" />
-            <p className='hidden md:block'>Orders</p>
-        </NavLink>
-    </section>
-    <p className='min-h-screen bg-gray-400 h-[1px] w-[0.5px]'></p>
-    </div>
-  )
-}
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import assets from '../assets/assets';
 
-export default SideBar
+const SideBar = ({ onItemClick }) => {
+  return (
+    <div className="flex flex-col p-4">
+      <div className="space-y-2">
+        {/* Manual NavLinks instead of mapped ones */}
+        <NavLink
+          to="add"
+          onClick={onItemClick}
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${
+              isActive ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100'
+            }`
+          }
+        >
+          <img className="h-5 w-5" src={assets.add_icon} alt="Add Items" />
+          <span className="text-sm font-medium">Add Items</span>
+        </NavLink>
+
+        <NavLink
+          to="listitems"
+          onClick={onItemClick}
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${
+              isActive ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100'
+            }`
+          }
+        >
+          <img className="h-5 w-5" src={assets.parcel_icon} alt="List Items" />
+          <span className="text-sm font-medium">List Items</span>
+        </NavLink>
+
+        <NavLink
+          to="orders"
+          onClick={onItemClick}
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${
+              isActive ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100'
+            }`
+          }
+        >
+          <img className="h-5 w-5" src={assets.order_icon} alt="Orders" />
+          <span className="text-sm font-medium">Orders</span>
+        </NavLink>
+      </div>
+    </div>
+  );
+};
+
+export default SideBar;

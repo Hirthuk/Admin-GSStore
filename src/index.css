@@ -6,6 +6,7 @@
 *{
     font-family: Outfit;
 }
+
 .active {
   transition: all;
   animation-duration: 200ms;
