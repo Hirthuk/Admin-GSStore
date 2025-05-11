@@ -14,3 +14,58 @@ radio button, or select box.
 It provides a user-friendly way to describe what the input is for and improves accessibility for screen readers.
 
 Used in Add.jsx file to manage input file form
+
+Used in Add Item to preview the uploaded image
+
+### **📝 `URL.createObjectURL()` - Key Points:**
+
+1. **Creates Local URL:** Generates a temporary URL for a `File` or `Blob` object.
+2. **Memory Management:** Use `URL.revokeObjectURL()` to free memory when the URL is no longer needed.
+3. **Local Scope:** Only works within the current browser session.
+4. **Common Use Cases:** Image previews, video playback, downloading generated files.
+5. **Not for Remote Files:** Only for local file blobs, not for external URLs.
+6. **Syntax:** `const url = URL.createObjectURL(file);`
+
+We have used that in src to get the uploaded image to preview
+
+We have used this below in the addlist page to store the details from the form and to call api to store
+### **📝 FormData - Key Points:**
+
+1. **Purpose:** Used to construct key/value pairs for form submissions, including file uploads.
+2. **Supports Multipart Forms:** Especially useful for `multipart/form-data` encoding.
+3. **Preserves File Metadata:** Handles file blobs correctly.
+4. **Easy to Use:** Works with both `<form>` elements and manually added key-value pairs.
+5. **Methods:**
+
+   * **`.append(key, value)`** - Add a key-value pair.
+   * **`.get(key)`** - Retrieve a value by key.
+   * **`.has(key)`** - Check if a key exists.
+   * **`.delete(key)`** - Remove a key-value pair.
+   * **`.entries()`** - Iterate over all key-value pairs.
+
+---
+
+### **🔧 Example Usage:**
+
+```javascript
+const formData = new FormData();
+formData.append('username', 'sharan');
+formData.append('profilePic', fileInput.files[0]);
+
+// Send with Axios or Fetch
+axios.post('/upload', formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+});
+```
+
+---
+
+### **🗂️ Typical Use Cases:**
+
+* File uploads
+* Form submissions with complex data
+* Sending images or large binary files
+
+

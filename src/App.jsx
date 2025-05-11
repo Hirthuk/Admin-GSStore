@@ -8,6 +8,8 @@ import AddItem from './pages/AddItem';
 import ListItem from './pages/ListItem';
 import Order from './pages/Orders';
 import 'react-toastify/dist/ReactToastify.css';
+
+export const backendURL = import.meta.env.VITE_BACKEND_URL;
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -52,9 +54,9 @@ const App = () => {
             {/* Main content */}
             <main className="flex-1 overflow-auto p-4 md:p-6">
               <Routes>
-                <Route path="/add" element={<AddItem />} />
-                <Route path="/listitems" element={<ListItem />} />
-                <Route path="/orders" element={<Order />} />
+                <Route path="/add" element={<AddItem token = {token} />} />
+                <Route path="/listitems" element={<ListItem  token = {token} />} />
+                <Route path="/orders" element={<Order  token = {token} />} />
               </Routes>
             </main>
           </div>
