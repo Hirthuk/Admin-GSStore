@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 const Login = ({setToken}) => {
-    const [email,setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email,setEmail] = useState('sharankumarp02@gmail.com');
+    const [password, setPassword] = useState('sharan@007');
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const onSumbitHandler = async (e) => {
         try{
